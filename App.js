@@ -1,17 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from "react-native-paper";
-import Test from "./src/components/Test";
+import Main from './src/screens/Main/Main';
+import Formulario from "./src/screens/Formulario/Formulario"
 
 export default function App() {
+  const [main, setMain] = useState(true);
+  const changeMain = () => setMain(!main)
+
   return (
 
     <PaperProvider>
-   <View style={styles.container}>
-      <Text>Esto es la app</Text>
-      <Test />
-    </View>
+      {!main ? (
+                  <Formulario changeMain={changeMain} />
+              ) : (
+                     <Main changeMain={changeMain} />
+              ) }
     </PaperProvider>
   );
 }
