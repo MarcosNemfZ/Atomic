@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from "react-native-paper";
 import colors from '../../../styles/colors';
@@ -10,21 +10,19 @@ import * as Yup from "yup"
 
 export default function Formulario(props) {
     const { changeForm } = props;
+    const [loading, setLoading] = useState(false);
 
     const formick = useFormik({
         initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async(formData) => {
-           // setLoadin(true);
+            setLoading(true);
             try {
                 await registerApi(formData);
                 changeForm();
             } catch (error) {
-                console.log("error");
-             //   setLoadin(false);
-              //  Toast.show("Error al registrar el usuario", {
-               //     position: Toast.positions.CENTER,
-               // });
+                console.log(error);
+                setLoading(false);
             }
         },
     });
@@ -54,6 +52,7 @@ export default function Formulario(props) {
            <Button 
               mode="contained"
               style={formStyle.btnEnviar}
+              loading={loading}
               onPress={formick.handleSubmit}
             >
                 Enviar

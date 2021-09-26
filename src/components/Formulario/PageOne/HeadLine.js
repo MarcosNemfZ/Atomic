@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native';
+import progreso from "../../../../assets/progreso_1.png"
 import { formStyle } from "../../../styles";
 import colors from '../../../styles/colors';
 
 export default function HeadLine() {
     return (
+        <>
+        <Image style={styles.img} source={progreso} />
         <View style={styles.container} >
             <View style={styles.containC} >
             <View style={styles.circulo} >
@@ -16,6 +19,7 @@ export default function HeadLine() {
                <Text style={formStyle.txtSecondary} >CONOCER</Text>
          </View> 
         </View>
+        </>
     )
 }
 
@@ -47,5 +51,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: -5,
         alignItems: "flex-start",
+    },
+    img:{
+        marginTop: -110,
+        marginBottom: -40,
+        width: "100%",
+        height: 180,
+        resizeMode: "contain",
     },
 })
