@@ -1,45 +1,30 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from "react-native-paper";
 import colors from '../../../styles/colors';
 import { formStyle } from "../../../styles";
-import img from "../../../../assets/group_4033.png";
-import {useFormik} from "formik";
-import toast from "react-native-root-toast";
-import Toast from "react-native-root-toast";
-import { registerApi } from "../../../api/formulario";
-import * as Yup from "yup";
+import img from "../../../../assets/group_4033.png"
+import {useFormik} from "formik"
+import { registerApi } from "../../../api/formulario"
+import * as Yup from "yup"
 
 export default function Formulario(props) {
     const { changeForm } = props;
-    const [loading, setLoadin] = useState(false)
 
-    const formik = useFormik({
-        initialValues: initialvalues(),
+    const formick = useFormik({
+        initialValues: initialValues(),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: async(formData) => {
-            setLoadin(true);
+           // setLoadin(true);
             try {
-                toast.show("Te has registrado de manera exitosa", {
-                    position: toast.positions.CENTER,
-                    duration: Toast.durations.LONG,
-                    shadow: true,
-                    animation: true,
-                    hideOnPress: true,
-                    delay: 1,
-                });
                 await registerApi(formData);
                 changeForm();
             } catch (error) {
-                setLoadin(false);
-                toast.show("Error en el registro, intenta de nuevo", {
-                    position: toast.positions.CENTER,
-                    duration: Toast.durations.LONG,
-                    shadow: true,
-                    animation: true,
-                    hideOnPress: true,
-                    delay: 0,
-                });
+                console.log("error");
+             //   setLoadin(false);
+              //  Toast.show("Error al registrar el usuario", {
+               //     position: Toast.positions.CENTER,
+               // });
             }
         },
     });
@@ -52,25 +37,24 @@ export default function Formulario(props) {
             <TextInput
             label="Nombre(s)" 
             style={styles.textimput}
-            onChangeText={(text)=> formik.setFieldValue("nombre", text)}
-            value={formik.values.nombre}
-            error={formik.errors.nombre}
+            onChangeText={(text)=> formick.setFieldValue("nombre", text)}
+            value={formick.values.nombre}
+            error={formick.errors.nombre}
             keyboardType="default" />
 
 
            <TextInput
             label="Apellidos" 
             style={styles.textimput}
-            onChangeText={(text)=> formik.setFieldValue("apellidos", text)}
-            value={formik.values.apellidos}
-            error={formik.errors.apellidos}/>
+            onChangeText={(text)=> formick.setFieldValue("apellidos", text)}
+            value={formick.values.apellidos}
+            error={formick.errors.apellidos}/>
 
 
            <Button 
               mode="contained"
               style={formStyle.btnEnviar}
-              loading={loading}
-              onPress={formik.handleSubmit}
+              onPress={formick.handleSubmit}
             >
                 Enviar
             </Button>
@@ -81,7 +65,7 @@ export default function Formulario(props) {
     )
 }
 
-function initialvalues(){
+function initialValues(){
     return {
         nombre: "",
         apellidos: ""
